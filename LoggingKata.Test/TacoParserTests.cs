@@ -31,6 +31,7 @@ namespace LoggingKata.Test
 
             //Arrange
 
+
             //Act
 
             //Assert
