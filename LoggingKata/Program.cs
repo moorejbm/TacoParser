@@ -38,6 +38,7 @@ namespace LoggingKata
             ITrackable loc1 = null;
             ITrackable loc2 = null;
             double distance = 0;
+            double distanceShort = 0;
 
             foreach (var tacoBell1 in locations)
             {
@@ -46,31 +47,39 @@ namespace LoggingKata
                 foreach (var tacobell2 in locations)
                 {
                     var geo2 = new GeoCoordinate(tacobell2.Location.Latitude, tacobell2.Location.Longitude);
-                   
-                    if (geo2.GetDistanceTo(geo1) > distance)
+                    distanceShort = geo2.GetDistanceTo(geo1);
+                    if (tacoBell1 != tacobell2)
                     {
-                        distance = geo2.GetDistanceTo(geo1);
-                        loc1 = tacoBell1;
-                        loc2 = tacobell2;
+
+
+                        if (geo2.GetDistanceTo(geo1) <= distance || geo2.GetDistanceTo(geo1) < distanceShort)
+                        {
+
+                            distanceShort = geo2.GetDistanceTo(geo1);
+                            loc1 = tacoBell1;
+                            loc2 = tacobell2;
+                        }
+
                     }
-                }                 
+
+                }
+                //HINT NESTED LOOPS SECTION---------------------
+                // Do a loop for your locations to grab each location as the origin (perhaps: `locA`)
+
+                // Create a new corA Coordinate with your locA's lat and long
+
+                // Now, do another loop on the locations with the scope of your first loop, so you can grab the "destination" location (perhaps: `locB`)
+
+                // Create a new Coordinate with your locB's lat and long
+
+                // Now, compare the two using `.GetDistanceTo()`, which returns a double
+                // If the distance is greater than the currently saved distance, update the distance and the two `ITrackable` variables you set above
+
+                // Once you've looped through everything, you've found the two Taco Bells farthest away from each other.
+
+                Console.WriteLine($"This TacoBell Location is: {loc1.Name} This is the furthest TacoBell Location: {loc2.Name}");
+                Console.WriteLine($"This TacoBell Location is: {loc1.Name} This is the Shortest TacoBell Location: {loc2.Name}");
             }
-            //HINT NESTED LOOPS SECTION---------------------
-            // Do a loop for your locations to grab each location as the origin (perhaps: `locA`)
-
-            // Create a new corA Coordinate with your locA's lat and long
-
-            // Now, do another loop on the locations with the scope of your first loop, so you can grab the "destination" location (perhaps: `locB`)
-
-            // Create a new Coordinate with your locB's lat and long
-
-            // Now, compare the two using `.GetDistanceTo()`, which returns a double
-            // If the distance is greater than the currently saved distance, update the distance and the two `ITrackable` variables you set above
-
-            // Once you've looped through everything, you've found the two Taco Bells farthest away from each other.
-
-            Console.WriteLine($"This TacoBell Location is: {loc1.Name} This is the furthest TacoBell Location: {loc2.Name}");
-
         }
     }
 }
