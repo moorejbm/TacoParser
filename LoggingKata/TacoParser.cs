@@ -9,15 +9,25 @@
         
         public ITrackable Parse(string line)
         {
+            //String Line of code Example fron .CSV = "34.073638, -84677017, TacoBell Acwort....
             logger.LogInfo("Begin parsing");
 
             // Take your line and use line.Split(',') to split it up into an array of strings, separated by the char ','
+            // Cells[0] = "34.073638";
+            // Cells[1] = "-84677017";
+            // Cells[2] = "TacoBell Acwort....";
+
+            // double lattitude = 34.073638  / line 35 36 example of what code is doing.
+            // string name = TacoBell Acwort.... no conversion needed allready a string 
+
             var cells = line.Split(',');
 
             // If your array.Length is less than 3, something went wrong
             if (cells.Length < 3)
             {
                 // Log that and return null
+                logger.LogError("Array Length is less than 3");
+                
                 // Do not fail if one record parsing fails, return null
                 return null; // TODO Implement
             }
@@ -29,7 +39,7 @@
             double longitude;
             double.TryParse(cells[1], out longitude);
             // grab the name from your array at index 2
-            string name = (cells[2]);
+            string name = cells[2];
 
 
             // Your going to need to parse your string as a `double`

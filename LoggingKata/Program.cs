@@ -37,8 +37,9 @@ namespace LoggingKata
             // Create a `double` variable to store the distance
             ITrackable loc1 = null;
             ITrackable loc2 = null;
+
             double distance = 0;
-            double distanceShort = 0;
+
 
             foreach (var tacoBell1 in locations)
             {
@@ -47,24 +48,26 @@ namespace LoggingKata
                 foreach (var tacobell2 in locations)
                 {
                     var geo2 = new GeoCoordinate(tacobell2.Location.Latitude, tacobell2.Location.Longitude);
-                    distanceShort = geo2.GetDistanceTo(geo1);
-                    if (tacoBell1 != tacobell2)
-                    {
+                   
+             
 
 
-                        if (geo2.GetDistanceTo(geo1) <= distance || geo2.GetDistanceTo(geo1) < distanceShort)
+                        if (geo2.GetDistanceTo(geo1) > distance)
                         {
 
-                            distanceShort = geo2.GetDistanceTo(geo1);
+                            logger.LogInfo($" current highest didtance is {tacoBell1.Name} to {tacobell2.Name}");
+                            distance = geo2.GetDistanceTo(geo1);
+
                             loc1 = tacoBell1;
                             loc2 = tacobell2;
                         }
-
-                    }
-
+                    
                 }
+
+
                 //HINT NESTED LOOPS SECTION---------------------
                 // Do a loop for your locations to grab each location as the origin (perhaps: `locA`)
+
 
                 // Create a new corA Coordinate with your locA's lat and long
 
@@ -77,9 +80,12 @@ namespace LoggingKata
 
                 // Once you've looped through everything, you've found the two Taco Bells farthest away from each other.
 
-                Console.WriteLine($"This TacoBell Location is: {loc1.Name} This is the furthest TacoBell Location: {loc2.Name}");
-                Console.WriteLine($"This TacoBell Location is: {loc1.Name} This is the Shortest TacoBell Location: {loc2.Name}");
+                Console.WriteLine($"{loc1.Name} is {distance} meters from {loc2.Name}");
+
+
+                //Console.WriteLine($"This TacoBell Location is: {loc1.Name} This is the Shortest TacoBell Location: {loc2.Name}");
             }
         }
     }
-}
+}  
+    
